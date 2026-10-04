@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0b3a5b" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0a2236" media="(prefers-color-scheme: dark)">
+<meta name="robots" content="noindex, nofollow">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Morgen">
+<meta name="application-name" content="Morgen">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
+<title>Morgen-Dashboard · Montag, 5. Oktober 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f1ec; --bg2:#e9eef2; --card:#ffffff; --card2:#f7f8fa; --text:#16202a; --muted:#5f6b78; --line:#e3e7ec;
+  --accent:#0b6e8a; --warn:#c2410c; --warn-bg:#fff1e6; --shadow:0 1px 2px rgba(16,24,40,.05),0 8px 24px rgba(16,24,40,.06);
+  --hero1:#0b3a5b; --hero2:#0f6c7f; --hero3:#e8a35c; --chip:#eef2f6; --radius:20px;
+  --bild:#dd0000; --oz:#00508c; --spiegel:#e64415;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0d1117; --bg2:#111826; --card:#161b22; --card2:#1c232c; --text:#e6edf3; --muted:#93a1b0; --line:#2a323c;
+    --accent:#5cc8e0; --warn:#fb923c; --warn-bg:#3a2214; --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+    --hero1:#0a2236; --hero2:#0d4a5a; --hero3:#8a5a2e; --chip:#222b35;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--text);
+  background:radial-gradient(1200px 600px at 10% -10%,var(--bg2),transparent 60%),var(--bg);min-height:100vh;line-height:1.45}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1240px;margin:0 auto;padding:clamp(12px,3vw,32px);padding-bottom:48px;
+  padding-top:max(clamp(12px,3vw,32px),calc(env(safe-area-inset-top) + 8px));
+  padding-left:max(clamp(12px,3vw,32px),env(safe-area-inset-left));padding-right:max(clamp(12px,3vw,32px),env(safe-area-inset-right));
+  padding-bottom:max(48px,calc(env(safe-area-inset-bottom) + 24px))}
+html{background:var(--bg)}
+/* Hero */
+.hero{position:relative;overflow:hidden;border-radius:calc(var(--radius) + 6px);color:#fff;padding:clamp(20px,4vw,40px);
+  background:linear-gradient(135deg,var(--hero1) 0%,var(--hero2) 62%,var(--hero3) 130%);box-shadow:var(--shadow);
+  display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end}
+.hero::after{content:"";position:absolute;inset:auto -10% -55% auto;width:520px;height:520px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 65%);pointer-events:none}
+.hero .eyebrow{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.75;font-weight:600}
+.hero h1{font-family:Fraunces,Georgia,serif;font-weight:700;font-size:clamp(1.9rem,5vw,3.2rem);line-height:1.08;margin:.25em 0 .2em}
+.hero .greet{font-size:clamp(1rem,2.2vw,1.2rem);opacity:.92;margin:0}
+.hero .summary{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}
+.pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.18);
+  padding:5px 11px;border-radius:999px;font-size:.85rem;backdrop-filter:blur(6px)}
+.weather{position:relative;z-index:1;min-width:260px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+  border-radius:var(--radius);padding:16px 18px;backdrop-filter:blur(8px)}
+.weather .top{display:flex;align-items:center;gap:14px}
+.weather .icon{font-size:2.6rem;line-height:1}
+.weather .temp{font-size:2.2rem;font-weight:700;line-height:1}
+.weather .desc{font-size:.9rem;opacity:.9}
+.weather .meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.82rem;opacity:.9;margin-top:10px}
+.hours{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:12px;text-align:center;font-size:.75rem}
+.hours div{background:rgba(255,255,255,.08);border-radius:10px;padding:6px 2px}
+.hours b{display:block;font-size:.85rem;font-weight:600}
+.hours span{display:block;font-size:1.05rem;margin:2px 0}
+/* Grid */
+.grid{display:grid;gap:clamp(12px,2vw,22px);margin-top:clamp(14px,2.4vw,24px);grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+.card.full{grid-column:1/-1}
+.card-h{display:flex;align-items:center;gap:12px;padding:16px 18px 12px;border-bottom:1px solid var(--line)}
+.card-h h2{margin:0;font-size:1.05rem;font-weight:700;letter-spacing:-.01em}
+.card-h .sub{font-size:.8rem;color:var(--muted)}
+.card-h .right{margin-left:auto;font-size:.78rem;color:var(--muted);text-align:right}
+.card-b{padding:12px 18px 16px;flex:1}
+.ico{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:1.2rem;background:var(--chip);flex:none}
+/* Logos */
+.logo{flex:none;height:34px;min-width:34px;padding:0 8px;border-radius:9px;display:grid;place-items:center;color:#fff;font-weight:800;letter-spacing:.02em;font-size:.82rem}
+.logo.bild{background:var(--bild);font-family:"Arial Black",Inter,sans-serif;font-size:.9rem;border-radius:4px}
+.logo.oz{background:var(--oz);font-family:Fraunces,Georgia,serif;font-size:1rem}
+.logo.spiegel{background:var(--spiegel);font-family:Georgia,serif;font-weight:700;letter-spacing:.06em;font-size:.72rem}
+.card.src-bild{border-top:4px solid var(--bild)} .card.src-oz{border-top:4px solid var(--oz)} .card.src-spiegel{border-top:4px solid var(--spiegel)}
+/* Today */
+.today{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+.allday{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.ad{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;background:var(--card2);border:1px solid var(--line);border-left:5px solid var(--c,#0b6e8a)}
+.ad .t{font-weight:600}
+.ad .m{font-size:.8rem;color:var(--muted)}
+.tl{list-style:none;margin:0;padding:0;position:relative}
+.tl li{display:grid;grid-template-columns:96px 18px 1fr;gap:10px;align-items:start;padding:8px 0}
+.tl .time{font-variant-numeric:tabular-nums;font-weight:600;font-size:.92rem;text-align:right;padding-top:2px}
+.tl .time small{display:block;font-weight:400;color:var(--muted);font-size:.78rem}
+.tl .dot{position:relative;height:100%}
+.tl .dot::before{content:"";position:absolute;left:50%;top:6px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--c,#0b6e8a);box-shadow:0 0 0 4px var(--card)}
+.tl .dot::after{content:"";position:absolute;left:50%;top:22px;bottom:-14px;width:2px;margin-left:-1px;background:var(--line)}
+.tl li:last-child .dot::after{display:none}
+.ev{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:10px 14px}
+.ev .t{font-weight:600}
+.ev .m{font-size:.82rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:2px}
+.ev.conflict{border-color:var(--warn);background:var(--warn-bg)}
+.flag{display:inline-block;margin-top:6px;font-size:.78rem;font-weight:600;color:var(--warn)}
+.cal{display:inline-flex;align-items:center;gap:5px}
+.cal::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c,#0b6e8a)}
+.empty{color:var(--muted);padding:14px 4px;font-size:.95rem}
+.note{font-size:.78rem;color:var(--muted);margin-top:10px}
+/* News */
+.feat{display:block;border-radius:14px;overflow:hidden;background:var(--card2);margin-bottom:6px;border:1px solid var(--line)}
+.feat img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:var(--chip)}
+.feat .fx{padding:10px 12px 12px}
+.feat .ht{font-weight:700;font-size:1.02rem;line-height:1.3}
+.feat .sm{font-size:.84rem;color:var(--muted);margin-top:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.news{list-style:none;margin:0;padding:0}
+.news li+li{border-top:1px solid var(--line)}
+.news a{display:flex;gap:12px;align-items:center;padding:10px 2px}
+.news a:hover .ht,.feat:hover .ht{color:var(--accent)}
+.news .tx{flex:1;min-width:0}
+.news .ht{font-weight:600;font-size:.93rem;line-height:1.32}
+.news img{width:64px;height:64px;border-radius:10px;object-fit:cover;flex:none;background:var(--chip)}
+.when{font-size:.75rem;color:var(--muted);margin-top:3px;display:flex;gap:8px;align-items:center}
+.plus{font-size:.65rem;font-weight:800;color:#fff;background:var(--bild);padding:1px 5px;border-radius:4px}
+.down{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;padding:30px 10px;color:var(--muted)}
+.down b{color:var(--text);font-size:1.05rem}
+.down code{font-size:.72rem;word-break:break-all;opacity:.8}
+.more{display:inline-block;margin-top:8px;font-size:.82rem;font-weight:600;color:var(--accent)}
+footer{margin-top:26px;text-align:center;font-size:.78rem;color:var(--muted)}
+/* Layout Heute + Mittagstisch */
+.grid.no-lunch .today-card{grid-column:1/-1}
+.grid.has-lunch .lunch{grid-column:span 2}
+.grid.public.has-lunch .lunch{grid-column:1/-1}
+.grid.public .places{grid-template-columns:repeat(4,minmax(0,1fr))}
+/* Regen */
+:root{--rain:#2563eb;--rain-soft:rgba(37,99,235,.18);--dry:#15803d;--dry-bg:#ecfdf3;--maybe:#b45309;--maybe-bg:#fff7e6;--wet-bg:#eef4ff;--band:rgba(234,179,8,.10);--band-lunch:rgba(234,179,8,.22)}
+@media (prefers-color-scheme: dark){:root{--rain:#60a5fa;--rain-soft:rgba(96,165,250,.22);--dry:#4ade80;--dry-bg:#0f2a1a;--maybe:#fbbf24;--maybe-bg:#2e2410;--wet-bg:#132038;--band:rgba(250,204,21,.07);--band-lunch:rgba(250,204,21,.16)}}
+.card.rain{border-top:4px solid var(--rain)} .card.rain.dry{border-top-color:var(--dry)} .card.rain.maybe{border-top-color:var(--maybe)}
+.rain-top{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+.rain-big{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:16px;flex:1;min-width:260px}
+.rain-big.wet{background:var(--wet-bg)} .rain-big.dry{background:var(--dry-bg)} .rain-big.maybe{background:var(--maybe-bg)}
+.rain-big .ri{font-size:2.4rem;line-height:1}
+.rain-big .rh{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:800;letter-spacing:-.01em}
+.rain-big.wet .rh{color:var(--rain)} .rain-big.dry .rh{color:var(--dry)} .rain-big.maybe .rh{color:var(--maybe)}
+.rain-big .rs{font-size:.9rem;color:var(--muted);margin-top:2px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:12px;background:var(--rain);color:#fff;font-weight:600;font-size:.92rem;white-space:nowrap;box-shadow:0 4px 14px var(--rain-soft)}
+.btn:hover{filter:brightness(1.08)}
+.wins{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.win{border:1px solid var(--line);border-radius:12px;padding:8px 12px;background:var(--card2)}
+.win .wn{font-weight:600;font-size:.88rem} .win .wn small{color:var(--muted);font-weight:400;margin-left:4px}
+.win .ws{font-size:.84rem;margin-top:2px}
+.win.dry .ws{color:var(--dry)} .win.maybe .ws{color:var(--maybe)} .win.wet{border-color:var(--rain);background:var(--wet-bg)} .win.wet .ws{color:var(--rain);font-weight:600}
+.chartwrap{margin-top:12px}
+.rchart{width:100%;height:auto;display:block}
+.rchart .band{fill:var(--band)} .rchart .band.lunch{fill:var(--band-lunch)}
+.rchart .bandlbl{font-size:10.5px;fill:var(--muted);font-family:Inter,sans-serif}
+.rchart .grid{stroke:var(--line);stroke-width:1;stroke-dasharray:3 4} .rchart .base{stroke:var(--muted);stroke-width:1}
+.rchart .axis{font-size:10.5px;fill:var(--muted);font-family:Inter,sans-serif}
+.rchart .prob{fill:var(--rain-soft)} .rchart .amt{fill:var(--rain)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.76rem;color:var(--muted);margin-top:6px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.lg{display:inline-block;width:12px;height:12px;border-radius:3px} .lg.amt{background:var(--rain)} .lg.prob{background:var(--rain-soft)} .lg.band{background:var(--band);border:1px solid var(--line)} .lg.band.lunch{background:var(--band-lunch)}
+/* Mittagstisch */
+.card.lunch{border-top:4px solid #ca8a04}
+.places{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.place{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--card2);display:flex;flex-direction:column}
+.pl-h{display:flex;gap:10px;justify-content:space-between;align-items:flex-start}
+.pn{font-weight:700} .pa{font-size:.76rem;color:var(--muted)}
+.pr{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex:none}
+.walk{font-size:.75rem;color:var(--muted);white-space:nowrap}
+.badge{font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.badge.ok{background:var(--dry-bg);color:var(--dry)} .badge.warn{background:var(--maybe-bg);color:var(--maybe)} .badge.info{background:var(--wet-bg);color:var(--rain)} .badge.off{background:var(--chip);color:var(--muted)}
+.dishes{list-style:none;margin:8px 0 0;padding:0}
+.dishes li{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-top:1px dashed var(--line);font-size:.88rem}
+.dishes li:first-child{border-top:0}
+.dishes li.cat{display:block;border-top:0;padding:8px 0 0;font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.dn{font-weight:500} .dd{font-size:.78rem;color:var(--muted);font-weight:400}
+.dp{white-space:nowrap;font-weight:700;text-align:right;font-variant-numeric:tabular-nums} .dp small{display:block;font-weight:400;font-size:.72rem;color:var(--muted)}
+.vtag{font-size:.66rem;font-weight:700;color:var(--dry);background:var(--dry-bg);padding:1px 6px;border-radius:999px}
+.ph{margin-top:10px;padding:14px;border:1px dashed var(--line);border-radius:10px;color:var(--muted);font-size:.88rem;text-align:center}
+.pl-f{margin-top:auto;padding-top:8px;display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+.pl-f .note{margin-top:0;font-size:.72rem} .pl-f .more{margin-top:0;white-space:nowrap}
+@media (max-width:1060px){.grid.public .places{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.grid .today-card,.grid.has-lunch .lunch{grid-column:1/-1}}
+@media (max-width:720px){
+  .grid{grid-template-columns:minmax(0,1fr)}
+  .hero{grid-template-columns:1fr}
+  .weather{min-width:0}
+  .tl li{grid-template-columns:70px 14px 1fr;gap:8px}
+  .wins{grid-template-columns:1fr}
+  .places,.grid.public .places{grid-template-columns:1fr}
+  .grid.has-lunch .lunch{grid-column:auto}
+  .btn{width:100%;justify-content:center}
+}
+@media print{body{background:#fff}.card,.hero{box-shadow:none}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="hero">
+    <div style="position:relative;z-index:1">
+      <div class="eyebrow">Morgen-Dashboard · Greifswald</div>
+      <h1>Montag, 5. Oktober 2026</h1>
+      <p class="greet">Guten Morgen! Hier ist der Überblick für heute.</p>
+      <div class="summary"><span class="pill">☀️ Heute trocken</span><span class="pill">🌤️ 8–19° · trocken</span><span class="pill">📰 18 Schlagzeilen</span><span class="pill">🕒 Stand: 01:15 Uhr</span></div>
+    </div>
+    <aside class="weather"><div class="top"><div class="icon">🌤️</div><div><div class="temp">19°</div><div class="desc">Höchstwert · Überwiegend klar · Greifswald</div></div></div><div class="meta"><span>↓ 8° ↑ 19°</span><span>☔ 0 %</span><span>💨 bis 18 km/h</span><span>🌅 07:15 · 🌇 18:33</span></div><div class=hours><div><b>7</b><span>⛅</span>9°</div><div><b>9</b><span>🌤️</span>10°</div><div><b>12</b><span>⛅</span>16°</div><div><b>15</b><span>🌤️</span>19°</div><div><b>18</b><span>🌤️</span>18°</div><div><b>21</b><span>☁️</span>14°</div></div></aside>
+  </header>
+  <section class="grid public has-lunch">
+    <article class="card full rain dry"><div class="card-h"><div class="ico">☔</div><div><h2>Regen</h2><div class="sub">Heute in Greifswald · 05–24 Uhr</div></div><div class="right">trocken</div></div><div class="card-b"><div class="rain-top"><div class="rain-big dry"><span class="ri">☀️</span><div><div class="rh">Heute trocken</div><div class="rs">Kein Regen zwischen 05:00 und 24:00 Uhr erwartet · Regenrisiko max. 0 %</div></div></div><a class="btn" href="https://www.wetteronline.de/regenradar/greifswald?mode=interactive" target="_blank" rel="noopener">📡 Regenradar Greifswald (WetterOnline)</a></div><div class="wins"><div class="win dry"><div class="wn">🚲 Hinweg <small>07:00–08:00</small></div><div class="ws">trocken · 0 %</div></div><div class="win dry"><div class="wn">🍽️ Mittag <small>11:30–14:00</small></div><div class="ws">trocken · 0 %</div></div><div class="win dry"><div class="wn">🏠 Heimweg <small>17:30–19:00</small></div><div class="ws">trocken · 0 %</div></div></div><div class="chartwrap"><svg class="rchart" viewBox="0 0 760 160" role="img" aria-label="Niederschlag pro Stunde 5–24 Uhr"><rect class="band" x="106.2" y="8" width="36.1" height="128" rx="6"/><text class="bandlbl" x="124.3" y="20" text-anchor="middle">🚲 Hinweg</text><rect class="band lunch" x="268.7" y="8" width="90.3" height="128" rx="6"/><text class="bandlbl" x="313.8" y="20" text-anchor="middle">🍽️ Mittag</text><rect class="band" x="485.3" y="8" width="54.2" height="128" rx="6"/><text class="bandlbl" x="512.4" y="20" text-anchor="middle">🏠 Heimweg</text><line class="grid" x1="34" x2="720" y1="136.0" y2="136.0"/><text class="axis" x="724" y="139.0">0</text><line class="grid" x1="34" x2="720" y1="81.0" y2="81.0"/><text class="axis" x="724" y="84.0">0,5</text><line class="grid" x1="34" x2="720" y1="26.0" y2="26.0"/><text class="axis" x="724" y="29.0">1,0</text><text class="axis" x="724" y="18">mm</text><text class="axis" x="30" y="84.0" text-anchor="end">50%</text><text class="axis" x="30" y="29.0" text-anchor="end">100%</text><text class="axis" x="52.1" y="152" text-anchor="middle">05</text><text class="axis" x="124.3" y="152" text-anchor="middle">07</text><text class="axis" x="196.5" y="152" text-anchor="middle">09</text><text class="axis" x="268.7" y="152" text-anchor="middle">11</text><text class="axis" x="340.9" y="152" text-anchor="middle">13</text><text class="axis" x="413.1" y="152" text-anchor="middle">15</text><text class="axis" x="485.3" y="152" text-anchor="middle">17</text><text class="axis" x="557.5" y="152" text-anchor="middle">19</text><text class="axis" x="629.7" y="152" text-anchor="middle">21</text><text class="axis" x="701.9" y="152" text-anchor="middle">23</text><line class="base" x1="34" x2="720" y1="136" y2="136"/></svg></div><div class="legend"><span><i class="lg amt"></i>Menge (mm/Std.)</span><span><i class="lg prob"></i>Wahrscheinlichkeit</span><span><i class="lg band lunch"></i>Mittag 11:30–14:00</span><span><i class="lg band"></i>Pendelzeiten</span></div><div class="note">Open-Meteo, 15-Minuten-Werte (ICON-D2) für Greifswald 54,0931 / 13,3879 · Stand 05.10., 01:14 Uhr. Für die nächsten 1–2 Stunden ist das Radar genauer.</div></div></article>
+    
+    <article class="card lunch"><div class="card-h"><div class="ico">🍽️</div><div><h2>Mittagstisch</h2><div class="sub">Nur heute · rund um die Bahnhofstraße</div></div><div class="right">13 Gerichte heute</div></div><div class="card-b"><div class="places"><div class="place"><div class="pl-h"><div><div class="pn">Café Koeppen &amp; Regionalladen</div><div class="pa">Bahnhofstraße 4–5 · Mittag 11–14 Uhr</div></div><div class="pr"><span class="walk">🚶 direkt in der Bahnhofstraße</span><span class="badge ok">Tageskarte ✓</span></div></div><ul class="dishes"><li><div class="dn">Gelbes Curry // Vietnam Style<div class="dd">mit BIO-Basmati-Reis, Erdnüssen, Koriander und Röstzwiebeln</div></div><div class="dp">9,50 €<small>8,50 € to go</small></div></li></ul><div class="pl-f"><span class="note">Wochenkarte 05.–09.10. (PDF) · ✓ geprüft 05.10., 00:50</span><a class="more" href="https://www.gutes-aus-vorpommern.de/wp-content/uploads/2026/10/Mittagskarte-Koeppen-05.-09.Oktober-26-1.pdf" target="_blank" rel="noopener">Zur Karte →</a></div></div><div class="place"><div class="pl-h"><div><div class="pn">Brasserie Hermann</div><div class="pa">Gützkower Straße 1 · Mo–Fr 11:30–14:30 Uhr</div></div><div class="pr"><span class="walk">🚶 ca. 2 Min. zu Fuß</span><span class="badge off">aktuelle Karte fehlt</span></div></div><div class="ph">Für heute ist noch keine aktuelle Karte online.</div><div class="pl-f"><span class="note">Online ist noch die Karte vom 28.09.–02.10.26 (Bild gelesen); die Wochenkarte ab 05.10. fehlt noch. · ✓ geprüft 05.10., 00:50</span><a class="more" href="https://www.brasseriehermann.de/mittagskarte.html" target="_blank" rel="noopener">Zur Karte →</a></div></div><div class="place"><div class="pl-h"><div><div class="pn">s*bar – Bistro &amp; Suppenbar</div><div class="pa">Markt 26 · Mo–Fr 11–15 Uhr</div></div><div class="pr"><span class="walk">🚶 ca. 6 Min. zu Fuß</span><span class="badge warn">Wochenplan ohne Datum</span></div></div><ul class="dishes"><li class="cat">Tagesessen</li><li><div class="dn">Bayrisches Wurstgulasch mit Spirelli und Reibekäse</div><div class="dp"></div></li><li><div class="dn">Griechische Hähnchenpfanne mit Feta,Oliven und Kirschtomaten und Basmatireis</div><div class="dp"></div></li><li><div class="dn">Frischkäse-Hackfleisch-Pasta mit Getrockneten Tomaten</div><div class="dp"></div></li><li class="cat">Fleischsuppe</li><li><div class="dn">Gelber Erbseneintopf mit Kassler</div><div class="dp"></div></li><li><div class="dn">Ungarischer Bohneneintopf mit Rinderhack und Kartoffelwürfel</div><div class="dp"></div></li><li class="cat">Vegan/vegetarische Suppe</li><li><div class="dn">Griechische Tomaten-Feta-Suppe mit Kritharaki</div><div class="dp"></div></li><li><div class="dn">Rosenkohlcremesuppe mit Kartoffelwürfeln und Röstzwiebeln <span class="vtag">vegetarisch</span></div><div class="dp"></div></li><li class="cat">Dessert</li><li><div class="dn">Milchreis wahlweise mit Zimt &amp; Zucker, Apfelmus</div><div class="dp">5,00 €/6,00 €</div></li></ul><div class="pl-f"><span class="note">Plan ohne Datum · ✓ Montag-Angebot geprüft 05.10., 00:50</span><a class="more" href="https://www.sbar-greifswald.de/" target="_blank" rel="noopener">Zur Karte →</a></div></div><div class="place"><div class="pl-h"><div><div class="pn">Café Lichtblick</div><div class="pa">Markt 23/24 · Mittagstisch ab 11 Uhr</div></div><div class="pr"><span class="walk">🚶 ca. 6 Min. zu Fuß</span><span class="badge warn">Wochenplan ohne Datum</span></div></div><ul class="dishes"><li><div class="dn">Kasseler Nacken mit Spinat und Kartoffeln</div><div class="dp">9,50 €</div></li><li><div class="dn">Rühreier mit Spinat und Kartoffeln</div><div class="dp">8,50 €</div></li><li><div class="dn">Wruken-Eintopf mit Schweinefleisch</div><div class="dp">5,50 €</div></li><li><div class="dn">Veggi Bowl: Falafeltaler, Blattsalat, Bohnen, Paprika, Rote Bete, Kräuterdressing, Sprossen, Crunchy-Topping</div><div class="dp">8,50 €</div></li></ul><div class="pl-f"><span class="note">Plan ohne Datum · ✓ Montag-Angebot geprüft 05.10., 00:50</span><a class="more" href="https://www.pommerscher-diakonieverein.de/einkaufen-geniessen/speisen-geniessen/lichtblick-cafe-und-restaurant" target="_blank" rel="noopener">Zur Karte →</a></div></div></div></div></article>
+    <article class="card src-bild"><div class="card-h"><div class="logo bild">BILD</div><div><h2>Bild.de</h2><div class="sub">Politik, News &amp; Aktuelles</div></div><div class="right">6 Schlagzeilen</div></div><div class="card-b"><a class="feat" href="https://www.bild.de/regional/sachsen-anhalt/dieser-ort-in-sachsen-anhalt-hat-mit-der-ddr-zu-tun-netzagentur-will-leitung-drueberlegen-6ac0d9addde7b030a3021555" target="_blank" rel="noopener"><img src="https://images.bild.de/6ac0d9addde7b030a3021555/377aca3b279262af393fcc2c67c51388,314d8f97?w=320" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><div class="fx"><div class="ht">Netzagentur will Leitung drüberlegen - Dieser Ort hat mit der DDR zu tun</div><div class=sm>20.000 Menschen kommen jährlich. Behörden haben eine Höchstspannungsleitung freigegeben.</div><div class="when">Gestern, 23:27</div></div></a><ul class="news"><li><a href="https://www.bild.de/sport/fussball/show-um-cristiano-ronaldo-ohne-den-superstar-portugal-schlaegt-norwegen-6ac2b4792433def12e72ceb9" target="_blank" rel="noopener"><div class="tx"><div class="ht">Fans mit Masken und Plakaten im Stadion - Ronaldo-Show ohne CR7!</div><div class="when">Gestern, 23:25</div></div><img src="https://images.bild.de/6ac2b4792433def12e72ceb9/f0916792675f5653b5b62727b09f5964,880ed576?w=320" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"></a></li><li><a href="https://www.bild.de/regional/sachsen-anhalt/wurstfabrik-geschlossen-beliebte-ost-marke-startet-neu-durch-6ac25bd085d64113fb06ecc1" target="_blank" rel="noopener"><div class="tx"><div class="ht">Wurstfabrik geschlossen - Beliebte Ost-Marke startet an neuem Standort durch</div><div class="when">Gestern, 23:24</div></div><img src="https://images.bild.de/6ac25bd085d64113fb06ecc1/8f779a846fe0050f4af28a74756ebeb8,938d4250?w=320" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"></a></li><li><a href="https://www.bild.de/news/inland/dieser-weihnachtsmarkt-ist-binnen-24-stunden-ausverkauft-warum-er-so-begehrt-ist-6ac21e8b85d64113fb06e874" target="_blank" rel="noopener"><div class="tx"><div class="ht">Warum er so begehrt ist - Dieser Weihnachtsmarkt binnen 24 Stunden ausverkauft</div><div class="when">Gestern, 23:17</div></div><img src="https://images.bild.de/6ac21e8b85d64113fb06e874/17f148e515337346ba9e0e111d7eaa9d,38a0da56?w=320" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"></a></li><li><a href="https://www.bild.de/politik/ausland-und-internationales/chef-von-openai-zur-regulierung-bei-kuenstlicher-intelligenz-fuer-die-vorteile-von-ki-gewisse-risiken-in-kauf-nehmen-6ac205f4d463a3034f717a5a" target="_blank" rel="noopener"><div class="tx"><div class="ht">„Müssen akzeptieren, dass auch Schlechtes passiert“ - KI-Boss will plötzlich Risiken in Kauf nehmen</div><div class="when">Gestern, 23:03</div></div><img src="https://images.bild.de/6ac205f4d463a3034f717a5a/7cb3623e404eae8498068990d233330c,efdb7361?w=320" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"></a></li><li><a href="https://www.bild.de/regional/berlin/drama-in-berlin-lebensgefahr-person-stuerzt-15-meter-tief-in-aufzugsschacht-6ac2b413b0ca83ad0a1d923e" target="_blank" rel="noopener"><div class="tx"><div class="ht">Lebensgefahr! - Person stürzt 15 Meter tief in Aufzugsschacht</div><div class="when">Gestern, 22:37</div></div><img src="https://images.bild.de/6ac2b413b0ca83ad0a1d923e/28f68707c90dda508d050749c17d1621,576b0dcb?w=320" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"></a></li></ul><a class="more" href="https://www.bild.de" target="_blank" rel="noopener">Mehr auf Bild.de →</a></div></article><article class="card src-oz"><div class="card-h"><div class="logo oz">OZ</div><div><h2>Ostsee-Zeitung</h2><div class="sub">Greifswald &amp; Vorpommern</div></div><div class="right">6 Schlagzeilen</div></div><div class="card-b"><a class="feat" href="https://www.ostsee-zeitung.de/lokales/vorpommern-greifswald/greifswald/vierow-bei-greifswald-toter-bei-brand-in-gartenlaube-gefunden-identitaet-unklar-RCUPWG76YVGCLHEJSA5UTMKQNU.html" target="_blank" rel="noopener"><img src="https://www.ostsee-zeitung.de/resizer/v2/KDATW5A6SBHKDJER5NHLGCA3QY.jpg?auth=87556a74899adb83fd405e82ba291234c3d343eb497feaf9d6ff58b8653f0af9&amp;quality=70&amp;width=596" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><div class="fx"><div class="ht">Vierow bei Greifswald: Toter bei Brand in Gartenlaube gefunden – Identität unklar</div><div class=sm>In einer Gartenlaube im ostvorpommerschen Vierow ist am Sonntagmittag ein Feuer ausgebrochen. Einsatzkräfte finden in dem Gebäude eine tote Person. Zahlreiche Feuerwehren, Rettungsdienst und Polizei sind vor Ort.</div><div class="when">Gestern, 21:24</div></div></a><ul class="news"><li><a href="https://www.ostsee-zeitung.de/lokales/vorpommern-greifswald/usedom/spott-um-amthors-strandkorb-im-kanzleramt-auf-usedom-begann-die-kuriose-geschichte-XXMXAVDPXFDQREJXHU5YFQ2EP4.html" target="_blank" rel="noopener"><div class="tx"><div class="ht">Spott um Amthors Strandkorb im Kanzleramt: Auf Usedom begann die kuriose Geschichte</div><div class="when">Gestern, 19:16</div></div><img src="https://www.ostsee-zeitung.de/resizer/v2/KGNHBDI7OBDFJDUBXA3RIHGOFM.jpg?auth=9e0b9659601e00f86368005db86f3ec4afe96bbdaac6a0e6b36c8487eb5fff22&amp;quality=70&amp;width=596" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"></a></li><li><a href="https://www.ostsee-zeitung.de/lokales/vorpommern-greifswald/greifswald/greifswald-europakreuzung-braucht-mehr-als-nur-kreisverkehr-mit-tunnel-FDRESPQCUFFUZNFIASD65HP24M.html" target="_blank" rel="noopener"><div class="tx"><div class="ht">Greifswald: Europakreuzung braucht mehr als nur Kreisverkehr mit Tunnel</div><div class="when">Gestern, 16:52</div></div><img src="https://www.ostsee-zeitung.de/resizer/v2/7FEMMPF5TBFITGYQCIH5KWQBCA.jpg?auth=d8579e669e3288656d2f3f26d024ea0959b5f881ab085407efcdbb4ef291a974&amp;quality=70&amp;width=596" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"></a></li><li><a href="https://www.ostsee-zeitung.de/lokales/vorpommern-greifswald/greifswald/greifswald-europakreuzung-muss-als-kreisverkehr-radikal-neu-gedacht-werden-2O4N77PNQBAQNIR2LF75NAFMUI.html" target="_blank" rel="noopener"><div class="tx"><div class="ht">Greifswald: Europakreuzung muss als Kreisverkehr radikal neu gedacht werden</div><div class="when">Gestern, 16:51</div></div><img src="https://www.ostsee-zeitung.de/resizer/v2/C4IL6VG62RCMDFNXDIEIU5KM3A.jpeg?auth=ade2c3c944cedf9b62acc1166d0f058d8b6faf7326fee20bc86146aa03197b63&amp;quality=70&amp;width=596" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"></a></li><li><a href="https://www.ostsee-zeitung.de/lokales/vorpommern-greifswald/greifswald/greifswalder-millionaer-feiert-deutsche-einheit-mauerfall-hat-mir-alles-ermoeglicht-ZH6LC6YVQJC4NPBZJCPB4MHFRM.html" target="_blank" rel="noopener"><div class="tx"><div class="ht">Greifswalder Millionär feiert Deutsche Einheit: „Mauerfall hat mir alles ermöglicht“</div><div class="when">Gestern, 14:16</div></div><img src="https://www.ostsee-zeitung.de/resizer/v2/5RWQE4G2DVDS3KLZG4P6X2U3WU.jpg?auth=83fe0b476d2fd513c93700f4e496e1129a7e280e795e7acf8f083e6ce85b970d&amp;quality=70&amp;width=596" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"></a></li><li><a href="https://www.ostsee-zeitung.de/lokales/vorpommern-greifswald/greifswald/debatte-um-greifswalder-europakreisel-mit-tunnel-oder-ueberfuehrung-ist-ein-fantasieprojekt-KLPVBY3GXJGHBPBIWAREGFTVT4.html" target="_blank" rel="noopener"><div class="tx"><div class="ht">Debatte um Greifswalder „Europakreisel&quot; mit Tunnel oder Überführung: „Ist ein Fantasieprojekt“</div><div class="when">Gestern, 12:00</div></div><img src="https://www.ostsee-zeitung.de/resizer/v2/BL3TFQEZ5VDRTFQPQFZ456C3N4.jpg?auth=1fde94380c5e588032f76b6035ae7290db40b2d56c5386c6cb970ea4eea1ea43&amp;quality=70&amp;width=596" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"></a></li></ul><a class="more" href="https://www.ostsee-zeitung.de/lokales/vorpommern-greifswald/greifswald/" target="_blank" rel="noopener">Mehr auf Ostsee-Zeitung →</a></div></article><article class="card src-spiegel"><div class="card-h"><div class="logo spiegel">SPIEGEL</div><div><h2>Spiegel.de</h2><div class="sub">Schlagzeilen, Politik &amp; Wirtschaft</div></div><div class="right">6 Schlagzeilen</div></div><div class="card-b"><a class="feat" href="https://www.spiegel.de/ausland/raf-fairford-us-luftwaffe-zieht-alle-bomber-nach-anschlagsverdacht-ab-a-025f9409-8f20-41db-93fe-532795048816#ref=rss" target="_blank" rel="noopener"><img src="https://cdn.prod.www.spiegel.de/images/cec230a2-9e91-462e-9d46-7321a65f5f11_w520_r2.08_fpx50_fpy54.98.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><div class="fx"><div class="ht">RAF Fairford: US-Luftwaffe zieht alle Bomber nach Anschlagsverdacht ab</div><div class=sm>Die mutmaßlichen Anschlagspläne gegen die britische Basis Fairford haben das US-Militär aufgeschreckt. Jetzt sind sämtliche Langstreckenbomber zurückbeordert worden. Die Eile des Abzugs wirft neue Fragen auf.</div><div class="when">00:56 Uhr</div></div></a><ul class="news"><li><a href="https://www.spiegel.de/ausland/israels-spieler-tragen-armbinden-in-gedenken-an-terror-opfer-a-b65a6bbe-f010-4c7d-86fc-f6a01a775390#ref=rss" target="_blank" rel="noopener"><div class="tx"><div class="ht">Israels Spieler tragen Armbinden in Gedenken an Terror-Opfer</div><div class="when">Gestern, 21:30</div></div><img src="https://cdn.prod.www.spiegel.de/images/d1e0e5a7-8bee-42f3-9038-8621314da0a1_w520_r2.08_fpx51_fpy41.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"></a></li><li><a href="https://www.spiegel.de/ausland/cornell-university-anwalt-berichtet-von-drohungen-gegen-jane-doe-a-294edb3b-c9f0-4192-ac54-c03faa20e873#ref=rss" target="_blank" rel="noopener"><div class="tx"><div class="ht">Cornell University: Anwalt berichtet von Drohungen gegen »Jane Doe«</div><div class="when">Gestern, 21:19</div></div><img src="https://cdn.prod.www.spiegel.de/images/2fcbc5af-99df-4058-9671-a8d583f55fed_w520_r2.08_fpx65.32_fpy49.96.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"></a></li><li><a href="https://www.spiegel.de/ausland/alexander-karp-palantir-chef-laesst-15-000-hektar-wald-in-schweden-kaufen-a-506afcaa-a0bf-4b3d-b656-4382470a7911#ref=rss" target="_blank" rel="noopener"><div class="tx"><div class="ht">Alexander Karp: Palantir-Chef lässt 15.000 Hektar Wald in Schweden kaufen</div><div class="when">Gestern, 20:56</div></div><img src="https://cdn.prod.www.spiegel.de/images/2b905eca-0720-47a4-be2a-13bc9c9385ec_w520_r2.08_fpx42_fpy45.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"></a></li><li><a href="https://www.spiegel.de/sport/deutschland-in-der-einzelkritik-pavlovic-ueberzeugt-woltemade-bleibt-unsichtbar-a-c4b1a86c-bb21-4a88-bc3d-bea58af63bc4#ref=rss" target="_blank" rel="noopener"><div class="tx"><div class="ht">Deutschland in der Einzelkritik: Pavlović überzeugt, Woltemade bleibt unsichtbar</div><div class="when">Gestern, 23:37</div></div><img src="https://cdn.prod.www.spiegel.de/images/0fcaf55f-5394-436e-95e0-e1ba8a954cce_w520_r2.08_fpx56.65_fpy45.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"></a></li><li><a href="https://www.spiegel.de/ausland/gegen-7-uhr-steigt-der-kanzler-aus-dem-zug-um-7-45-uhr-gibt-es-den-ersten-luftalarm-a-9c77775b-fe7d-47e4-abd3-5cbceb6dc4d8#ref=rss" target="_blank" rel="noopener"><div class="tx"><div class="ht">Gegen 7 Uhr steigt der Kanzler aus dem Zug, um 7.45 Uhr gibt es den ersten Luftalarm</div><div class="when">Gestern, 19:38</div></div><img src="https://cdn.prod.www.spiegel.de/images/2992bf5c-f0c9-4b8f-9ff7-ebd5952bd399_w520_r2.08_fpx44_fpy50.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"></a></li></ul><a class="more" href="https://www.spiegel.de" target="_blank" rel="noopener">Mehr auf Spiegel.de →</a></div></article>
+  </section>
+  <footer>Erstellt 05.10.2026, 01:15 Uhr · Nachrichten-Stand 05.10., 01:14 Uhr (RSS) · Wetter: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> · Mittagstisch: Websites der Lokale</footer>
+</main>
+</body>
+</html>
